@@ -11,28 +11,18 @@ typedef struct {
   char* _name;            ///< module name
   short _coef;            ///< module coef
   short _credit;          ///< module credit
-} module_t, *module_ptr;
+} module_t;
 
-
-/** @fn module_t module_make(const char*, short, short)
- *  @brief
- */
-module_t module_make(const char* name,
-                     short coef,
-                     short credit) {
-  module_t md;
-  md._name = memdup(name, strlen(name) + 1);
-  md._coef = coef;
-  md._credit = credit;
-  return md;
+const char* module_name(module_t* mod) {
+  return mod->_name;
 }
 
+short module_coef(module_t* mod) {
+  return mod->_coef;
+}
 
-/** @fn void module_de(module_ptr)
- *  @brief
- */
-void module_del(module_ptr md) {
-  free(md->_name);
+short module_credit(module_t* mod) {
+  return mod->_credit;
 }
 
 #endif // __INCLUDES_MODULEDEF_H__

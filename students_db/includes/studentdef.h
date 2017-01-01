@@ -4,6 +4,7 @@
 #include <stdio.h>        // printf
 #include <stdlib.h>       // malloc
 #include "util.h"
+#include "moduledef.h"
 
 /** @struct student_t
  *  @brief
@@ -54,25 +55,44 @@ void student_clear(student_ptr s) {
   free(s->_grades);
 }
 
+void student_del(student_ptr s) {
+  student_clear(s);
+  free(s);
+}
+
 /** @fn void student_display(student_ptr)
  *  @brief
  */
 void student_display(student_ptr s) {
-  printf(
-    "id: %u\n"
-    "first name: %s\n"
-    "last name: %s\n"
-    "group: %d\n"
-    "credit: %d\n",
-    s->_id, s->_fname, s->_lname, s->_group, s->_credit);
+  if (s) {
+    printf(
+      "\nStudent info:\n"
+      "=============\n"
+      "id: %u\n"
+      "first name: %s\n"
+      "last name: %s\n"
+      "group: %d\n"
+      "credit: %d\n",
+      s->_id, s->_fname, s->_lname, s->_group, s->_credit);
+  }
 }
 
 float student_calc_average(student_ptr s, short n) {
-  float sum = 0;
+  s->_average = 0;
   for (float* g = s->_grades; g != s->_grades + n; ++g)
-    sum += *g;
-  s->_average = sum / n;
+    s->_average += *g;
+
+  s->_average /= n;
   return s->_average;
+}
+
+unsigned student_calc_credit(student_ptr s, module_t* modules_table, short n, float base) {
+  s->_credit = 0;
+  for (int i = 0; i < n; ++i) {
+    if (s->_grades[i] >= base)
+      s->_credit += module_credit(modules_table + i);
+  }
+  return s->_credit;
 }
 
 #endif // __INCLUDES_STUDENTDEF_H__

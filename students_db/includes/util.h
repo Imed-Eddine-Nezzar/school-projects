@@ -22,4 +22,12 @@ void istream_ignore(FILE* instream, int d) {
   for (int c; (c = fgetc(instream)) != EOF && c != d;);
 }
 
+/** @fn char* ufgets(char* dest, size_t n, FILE* stream)
+ *  @brief
+ */
+void ufgets(char* dest, size_t n, FILE* stream) {
+  for (int c; --n && (c = fgetc(stream)) != EOF && c != '\n'; *dest++ = c);
+  *dest = '\0';
+}
+
 #endif // __INCLUDES_UTIL_H__

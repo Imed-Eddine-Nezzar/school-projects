@@ -43,18 +43,18 @@ student_t* read_student() {
   printf("group: ");
   scanf("%hd", &group);
 
-  float grades[7];
+  float grades[nmodules];
   printf("grades:\n");
-  for (int i = 0; i < 7; ++i) {
+  for (int i = 0; i < nmodules; ++i) {
     printf("%15s: ", module_name(modules + i));
     scanf("%f", (grades + i));
   }
 
-  return student_make(id, fname, lname, group, grades, 7);
+  return student_make(id, fname, lname, group, grades, nmodules);
 }
 
 void _calc_average(void* s) {
-  student_calc_average((student_ptr)s, 7);
+  student_calc_average((student_ptr)s, nmodules);
 }
 
 void calc_average(forward_list_t* list) {
@@ -62,7 +62,7 @@ void calc_average(forward_list_t* list) {
 }
 
 void _calc_credit(void* s) {
-  student_calc_credit((student_ptr)s, modules, 7, 10.0);
+  student_calc_credit((student_ptr)s, modules, nmodules, 10.0);
 }
 
 void calc_credit(forward_list_t* list) {

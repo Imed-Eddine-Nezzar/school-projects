@@ -54,7 +54,7 @@ student_t* read_student() {
 }
 
 void _calc_average(void* s) {
-  student_calc_average((student_ptr)s, nmodules);
+  student_calc_average((student_ptr)s, modules, nmodules);
 }
 
 void calc_average(forward_list_t* list) {

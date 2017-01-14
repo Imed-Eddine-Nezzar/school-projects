@@ -68,21 +68,25 @@ void student_display(student_ptr s) {
     printf(
       "\nStudent info:\n"
       "=============\n"
-      "id: %u\n"
+      "        id: %u\n"
       "first name: %s\n"
-      "last name: %s\n"
-      "group: %d\n"
-      "credit: %d\n",
-      s->_id, s->_fname, s->_lname, s->_group, s->_credit);
+      " last name: %s\n"
+      "     group: %d\n"
+      "   average: %.2f\n"
+      "    credit: %d\n",
+      s->_id, s->_fname, s->_lname, s->_group, s->_average, s->_credit);
   }
 }
 
-float student_calc_average(student_ptr s, short n) {
+float student_calc_average(student_ptr s, const module_t* modules, short n) {
   s->_average = 0;
-  for (float* g = s->_grades; g != s->_grades + n; ++g)
-    s->_average += *g;
+  int totla_credit = 0;
+  for (int i = 0; i < n; ++i) {
+    s->_average += s->_grades[i] * modules[i]._credit;
+    totla_credit += modules[i]._credit;
+  }
 
-  s->_average /= n;
+  s->_average /= totla_credit;
   return s->_average;
 }
 
